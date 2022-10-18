@@ -1,7 +1,7 @@
 using Entities;
 using Microsoft.EntityFrameworkCore;
-
-namespace DataAccessLayer.Context;
+using System.Reflection;
+namespace DataAccessLayer;
 
 public class AppDbContext:DbContext
 {
@@ -11,4 +11,10 @@ public class AppDbContext:DbContext
     }
 
     public DbSet<Product> Products { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());//bu satırda tüm configurationları çalıştırıyoruz.
+        base.OnModelCreating(modelBuilder);
+    }
 }
